@@ -4,15 +4,15 @@ global obstacle_field field_resolution field_len_x field_len_y field_x field_y
 %% Control Panel
 bounds_x = [0 5];
 bounds_y = [0 5];
-field_resolution = 0.01;     % 1/field_resolution divisions per unit
+field_resolution = 100;     % divisions per unit
 
 PLOT_ARENA = 1;
 SAVE_MAT = 1;
 
 %% Calculations
 
-field_x = bounds_x(1):field_resolution:bounds_x(2);
-field_y = bounds_y(1):field_resolution:bounds_y(2);
+field_x = bounds_x(1):(1/field_resolution):bounds_x(2);
+field_y = bounds_y(1):(1/field_resolution):bounds_y(2);
 field_len_x = length(field_x);
 field_len_y = length(field_y);
 obstacle_field = zeros(field_len_x, field_len_y);
@@ -41,7 +41,7 @@ end
 
 function [] = draw_rectangle(center, len_x, len_y)
     global obstacle_field field_resolution field_len_x field_len_y
-    scale = @(x) floor(x/field_resolution) + 1;
+    scale = @(x) floor(x*field_resolution) + 1;
     
     top_left_x = scale(center(1) - len_x/2);
     top_left_y = scale(center(2) + len_y/2);
@@ -73,7 +73,7 @@ end
 
 function [] = draw_circle(center, radius)
     global obstacle_field field_resolution field_len_x field_len_y
-    scale = @(x) floor(x/field_resolution) + 1;
+    scale = @(x) floor(x*field_resolution) + 1;
     
     center_x = scale(center(1));
     center_y = scale(center(2));
